@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UserModule } from '../../user/user.module';
+import { UserModule } from '../user/user.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
 import configuration from 'src/configuration';
-import { User } from 'src/user/models/user.model';
+import { User } from 'src/modules/user/models/user.model';
 
 @Module({
   imports: [ConfigModule.forRoot({
