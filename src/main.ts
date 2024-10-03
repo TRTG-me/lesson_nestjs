@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe);
   
   const config = new DocumentBuilder()
-    .setTitle('Lesson api"')
+    .setTitle('Lesson api')
     .setDescription("This api for lesson")
     .setVersion("1.0")
     .addTag('API')
