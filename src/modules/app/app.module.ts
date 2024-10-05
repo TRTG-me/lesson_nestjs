@@ -8,6 +8,8 @@ import configuration from 'src/configuration';
 import { User } from 'src/modules/user/models/user.model';
 import { AuthModule } from '../auth/auth.module';
 import { TokenModule } from '../token/token.module';
+import { WatchlistModule } from '../watchlist/watchlist.module';
+import { WatchList } from '../watchlist/models/watchlist.model';
 
 @Module({
   imports: [ConfigModule.forRoot({
@@ -26,10 +28,11 @@ import { TokenModule } from '../token/token.module';
       database: configService.get('db_name'),
       synchronize: true,
       autoLoadModels: true,
-      models: [User]
+      models: [User, WatchList]
     })
   }),
   UserModule,
+  WatchlistModule,
   TokenModule,
   AuthModule],
   controllers: [AppController],
