@@ -9,9 +9,13 @@ export class TokenService {
 
     async generateJwtToken (user) {
         const payload = {user};
-        return this.jwtService.sign(payload,{
+        
+        const token = this.jwtService.sign(payload,{
             secret: this.configService.get('secret_jwt'),
             expiresIn: this.configService.get('expire_jwt')
         })
+        // console.log(token)
+        return token
+        
         }
 }
