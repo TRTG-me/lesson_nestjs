@@ -5,10 +5,14 @@ import * as bcrypt from 'bcrypt'
 import { CreateUserDTO, UpdateUserDto } from './dto';
 import { AppError } from 'src/common/constants/errors';
 import { WatchList } from '../watchlist/models/watchlist.model';
+import { TokenService } from '../token/token.service';
+import { AuthUserResponse } from '../auth/response';
 
 @Injectable()
 export class UserService {
-    constructor(@InjectModel(User) private readonly userRepository: typeof User){}
+    constructor(@InjectModel(User) private readonly userRepository: typeof User,
+    private readonly tokenService: TokenService
+    ){}
 
     async hashPassword (password: string): Promise<string>{
         try{
@@ -43,14 +47,17 @@ export class UserService {
     }
     }
 
-    async publicUser(email:string): Promise<User> {
+    async publicUser(email:string): Promise<AuthUserResponse> {
         try{
-        return this.userRepository.findOne({where: {email}, attributes: {exclude: ['password']},
+        const user = await this.userRepository.findOne({where: {email}, attributes: {exclude: ['password']},
             include: {
                 model: WatchList,
                 required: false
             }
-        })}
+        })
+        const token = await this.tokenService.generateJwtToken(user)
+        return {user,token}
+    }
         catch (e){
             throw new Error(e)
         }
